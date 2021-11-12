@@ -1,0 +1,45 @@
+#!/bin/bash
+# Silence script, run commands silently
+# Build 21.11.1204
+logdir=/home/$USER/.local/logs/
+
+# help prompt
+if [[ $1 == '--help' ]]
+then
+        echo "
+        command | ./silence
+        to run a command silently
+        "
+	exit
+fi
+
+# make logs directory if it doesn't yet exist
+if [[ ! -e $logdir ]]; then
+	echo "creating log directory $logdir"
+	mkdir $logdir
+
+elif [[ ! -d $logdir ]]; then
+	echo "$logdir already exists but is not a directory" 1>&2
+fi
+
+# take input command and run it silently
+input=""
+read input
+if [ 'grep -q $input sudo' ]; then
+	echo ""
+else
+	echo "The command you are attempting to run silently contains 'sudo', you cannot run a sudo command with this script"
+	exit
+fi
+$input &> /home/$USER/.local/logs/$RANDOM && error=0 || error=1
+
+# tell user if an error occured
+if [ $error == '0' ]
+then
+	echo ""
+fi
+
+if [ $error == '1' ]
+then
+	echo "An unknown error occured"
+fi

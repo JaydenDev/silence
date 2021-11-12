@@ -1,0 +1,21 @@
+#!/bin/bash
+# Silence.sh Installer
+# You can use this script to make your own software installer
+response=""
+
+dialog --backtitle "Bash Software Installation Utility" \
+	--title "Silence.sh installation" \
+	--yesno "You are installing the software 'silence.sh' by 'developer'\n\nDo you wish to continute the installation?\n\nMake sure you agree to any EULA or LICENSE for this software" 13 60 \
+
+clear	
+response=$?
+case $response in
+	0) echo "Installation Successful";;
+	1) echo "User exited";;
+esac
+
+
+
+
+
+
